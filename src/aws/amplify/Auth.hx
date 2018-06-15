@@ -22,7 +22,7 @@ extern class Auth {
 	static function forgotPasswordSubmit(username:String, code:String, password:String):Promise<Any>;
 	
 	static function currentAuthenticatedUser():Promise<CognitoUser>;
-	static function currentSession():Promise<Sessiond>;
+	static function currentSession():Promise<Session>;
 	static function currentUserInfo():Promise<UserInfo>;
 	static function currentUserPoolUser():Promise<CognitoUser>;
 }
