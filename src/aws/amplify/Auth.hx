@@ -38,7 +38,7 @@ typedef Session = {
 typedef SignUpInfo = {
 	username:String,
 	password:String,
-	attributes:DynamicAccess<String>,
+	?attributes:DynamicAccess<String>,
 }
 
 typedef UserInfo = {
