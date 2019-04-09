@@ -8,11 +8,17 @@ import js.Promise;
 @:jsRequire('aws-amplify', 'Hub')
 #end
 extern class Hub {
-	static function listen(name:String, o:{onHubCapsule:Capsule->Void}):Void;
+	static function listen(name:String, f:Capsule->Void):Void;
 }
 
 typedef Capsule = {
-	payload:{
-		event:String,
-	}
+	channel:String,
+	source:String,
+	payload:Payload,
+}
+
+typedef Payload = {
+	event:String,
+	?data:Any,
+	?message:String,
 }
