@@ -1,7 +1,7 @@
 package aws.amplify;
 
 import haxe.DynamicAccess;
-import js.Promise;
+import #if haxe4 js.lib.Promise #else js.Promise #end;
 
 #if amplify_global
 @:native('window["aws-amplify"].Auth')
@@ -12,6 +12,8 @@ extern class Auth {
 	static function signIn(username:String, password:String):Promise<CognitoUser>;
 	static function signOut():Promise<Any>;
 	
+	static function federatedSignIn(provider:String, response:FederatedResponse, user:FederatedUser):Promise<Credentials>;
+	
 	static function signUp(info:SignUpInfo):Promise<Any>;
 	static function confirmSignUp(username:String, code:String):Promise<Any>;
 	static function resendSignUp(username:String):Promise<Any>;
@@ -21,8 +23,8 @@ extern class Auth {
 	static function forgotPassword(username:String):Promise<Any>;
 	static function forgotPasswordSubmit(username:String, code:String, password:String):Promise<Any>;
 	
-	static function currentAuthenticatedUser():Promise<CognitoUser>;
-	static function currentSession():Promise<Session>;
+	static function currentAuthenticatedUser():Promise<CognitoUser>; // or Any (for federated signin)
+	static function currentSession():Promise<CognitoUserSession>;
 	static function currentUserInfo():Promise<UserInfo>;
 	static function currentUserPoolUser():Promise<CognitoUser>;
 }
@@ -53,7 +55,7 @@ typedef CognitoUserPool = {
 	advancedSecurityDataCollectionFlag:Bool,
 }
 
-typedef Session = {
+typedef CognitoUserSession = {
 	idToken:{
 		jwtToken:String,
 	},
@@ -69,4 +71,22 @@ typedef UserInfo = {
 	id:String,
 	username:String,
 	attributes:DynamicAccess<String>,
+}
+
+typedef FederatedResponse = {
+	token:String,
+	?identity_id:String,
+	expires_at:Float,
+}
+typedef FederatedUser = {
+	?email:String,
+	name:String,
+}
+typedef Credentials = {
+	accessKeyId:String,
+	authenticated:Bool,
+	identityId:String,
+	secretAccessKey:String,
+	sessionToken:String,
+
 }
