@@ -23,24 +23,29 @@ extern class Auth {
 	static function forgotPassword(username:String):Promise<Any>;
 	static function forgotPasswordSubmit(username:String, code:String, password:String):Promise<Any>;
 	
+	static function userAttributes(user:CognitoUser):Promise<Array<CognitoUserAttribute>>;
+	static function userSession(user:CognitoUser):Promise<CognitoUserSession>;
+	
 	static function currentAuthenticatedUser():Promise<CognitoUser>; // or Any (for federated signin)
 	static function currentSession():Promise<CognitoUserSession>;
 	static function currentUserInfo():Promise<UserInfo>;
 	static function currentUserPoolUser():Promise<CognitoUser>;
 }
 
-typedef CognitoUser = {
-	username:String,
-	pool:CognitoUserPool, 
-	Session:String,
-	client:Client, 
-	signInUserSession:Dynamic, 
-	authenticationFlowType:String,
-	challengeName:String,
-	challengeParam:{
+extern class CognitoUser {
+	var username:String;
+	var pool:CognitoUserPool;
+	var Session:String;
+	var client:Client;
+	var signInUserSession:Dynamic;
+	var authenticationFlowType:String;
+	var challengeName:String;
+	var challengeParam:{
 		userAttributes:DynamicAccess<String>, 
 		requiredAttributes:Array<Dynamic>,
-	}
+	};
+	
+	function updateAttributes(attrs:Array<CognitoUserAttribute>):Promise<String>;
 }
 
 typedef Client = {
@@ -89,4 +94,9 @@ typedef Credentials = {
 	secretAccessKey:String,
 	sessionToken:String,
 
+}
+
+typedef CognitoUserAttribute = {
+	Value:String,
+	Name:String,
 }
