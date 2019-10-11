@@ -6,7 +6,7 @@ package aws.amplify;
 @:jsRequire('aws-amplify', 'Hub')
 #end
 extern class Hub {
-	static function listen(name:String, f:{onHubCapsule:Capsule->Void}):Void;
+	static function listen(name:String, f:Capsule->Void):Void;
 }
 
 typedef Capsule = {
