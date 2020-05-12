@@ -4,7 +4,7 @@ import haxe.DynamicAccess;
 import #if haxe4 js.lib.Promise #else js.Promise #end;
 
 #if amplify_global
-@:native('window["aws-amplify"].Auth')
+@:native('window.aws_amplify.Auth')
 #else
 @:jsRequire('@aws-amplify/auth', 'default')
 #end

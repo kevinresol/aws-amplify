@@ -1,7 +1,7 @@
 package aws.amplify;
 
 #if amplify_global
-@:native('window["aws-amplify"].Hub')
+@:native('window.aws_amplify.Hub')
 #else
 @:jsRequire('@aws-amplify/core', 'Hub')
 #end
